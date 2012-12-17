@@ -39,11 +39,7 @@ public class ActividadPrincipal extends Activity implements OnItemSelectedListen
 		
 		regiones = geografiaEspana.getRegiones();
 		
-		regionesAdapter = new ArrayAdapter<String>(
-				this, 
-				android.R.layout.simple_spinner_item
-				, regiones
-				);
+		regionesAdapter = putStringArrayIntoAdapter(geografiaEspana.getRegiones());
 		
 		provinciasAdapter = new ArrayAdapter<String>(
 				this, 
@@ -78,17 +74,21 @@ public class ActividadPrincipal extends Activity implements OnItemSelectedListen
 	public void onItemSelected(AdapterView<?> parent, View v, int position,
 			long id) {
 		
-		int viewId = v.getId();
+		int viewId = parent.getId();
 		Log.d("GeographySpain", "onItemSelected " + viewId);
 		if(viewId == R.id.spregiones){
 			String region = regionesAdapter.getItem(position);
 			Log.d("GeographySpain", "elegida region " + region);
-			provinciasAdapter.addAll(geografiaEspana.getProvinciass(region));
+			provinciasAdapter = putStringArrayIntoAdapter( 
+					geografiaEspana.getProvincias(region)
+					);
+			provinciasSpinner.setAdapter(provinciasAdapter);
 			provinciasAdapter.notifyDataSetChanged();
 		}else if (viewId == R.id.spprovincias){
 			String provincia = provinciasAdapter.getItem(position);
 			Log.d("GeographySpain", "elegida provincia " + provincia);
-			municipiosAdapter.addAll(geografiaEspana.getMunicipios(provincia ));
+			municipiosAdapter = putStringArrayIntoAdapter(geografiaEspana.getMunicipios(provincia ));
+			municipiosSpinner.setAdapter(municipiosAdapter);
 			municipiosAdapter.notifyDataSetChanged();
 		}else if (viewId == R.id.spmunicipios){
 			String municipio = municipiosAdapter.getItem(position) ;
@@ -105,5 +105,15 @@ public class ActividadPrincipal extends Activity implements OnItemSelectedListen
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	private ArrayAdapter<String> putStringArrayIntoAdapter(String[] array){
+		ArrayAdapter<String>adapter = new ArrayAdapter<String>(
+				this, 
+				android.R.layout.simple_spinner_item, 
+				array
+				);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		return adapter;
+	}
+		
 }

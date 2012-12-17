@@ -39,34 +39,36 @@ public class GeographySpain {
 		regionesProvincias.put(regiones[4], res.getStringArray(R.array.CastillaLaMancha));
 		//Cataluña
 		regionesProvincias.put(regiones[5], res.getStringArray(R.array.Cataluna));
-		//Comunidad de Madrid
-		regionesProvincias.put(regiones[6], res.getStringArray(R.array.ComMadrid));
-		//Comunidad Foral de Navarra
-		regionesProvincias.put(regiones[7], res.getStringArray(R.array.ComNavarra));
-		//Comunidad Valenciana
-		regionesProvincias.put(regiones[8], res.getStringArray(R.array.ComValenciana));
-		//Extremadura
-		regionesProvincias.put(regiones[9], res.getStringArray(R.array.Extremadura));
-		//Galicia
-		regionesProvincias.put(regiones[10], res.getStringArray(R.array.Galicia));
-		//Islas Baleares
-		regionesProvincias.put(regiones[11], res.getStringArray(R.array.IslasBaleares));
-		//Islas Canarias
-		regionesProvincias.put(regiones[12], res.getStringArray(R.array.IslasCanarias));
-		//La Rioja
-		regionesProvincias.put(regiones[13], res.getStringArray(R.array.LaRioja));
-		//País Vasco
-		regionesProvincias.put(regiones[14], res.getStringArray(R.array.PaisVasco));
-		//Principado de Asturias
-		regionesProvincias.put(regiones[15], res.getStringArray(R.array.PrincipadoAsturias));
-		//Regioń de Murcia
-		regionesProvincias.put(regiones[16], res.getStringArray(R.array.RegionMurcia));
-		// añadimos las Ciudades Autónomas
-		String[] ciudadesAutonomas = res.getStringArray(R.array.CiudadesAutonomas);
+		
 		//Ceuta
-		regionesProvincias.put(ciudadesAutonomas[0], res.getStringArray(R.array.MunicipiosCeuta));
+		regionesProvincias.put(regiones[6], res.getStringArray(R.array.MunicipiosCeuta));
+		
+		//Comunidad de Madrid
+		regionesProvincias.put(regiones[7], res.getStringArray(R.array.ComMadrid));
+				
+		//Comunidad Foral de Navarra
+		regionesProvincias.put(regiones[8], res.getStringArray(R.array.ComNavarra));
+		//Comunidad Valenciana
+		regionesProvincias.put(regiones[9], res.getStringArray(R.array.ComValenciana));
+		//Extremadura
+		regionesProvincias.put(regiones[10], res.getStringArray(R.array.Extremadura));
+		//Galicia
+		regionesProvincias.put(regiones[11], res.getStringArray(R.array.Galicia));
+		//Islas Baleares
+		regionesProvincias.put(regiones[12], res.getStringArray(R.array.IslasBaleares));
+		//Islas Canarias
+		regionesProvincias.put(regiones[13], res.getStringArray(R.array.IslasCanarias));
+		//La Rioja
+		regionesProvincias.put(regiones[14], res.getStringArray(R.array.LaRioja));
 		//Melilla
-		regionesProvincias.put(ciudadesAutonomas[1], res.getStringArray(R.array.MunicipiosMelilla));
+		regionesProvincias.put(regiones[15], res.getStringArray(R.array.MunicipiosMelilla));
+		//País Vasco
+		regionesProvincias.put(regiones[16], res.getStringArray(R.array.PaisVasco));
+		
+		//Principado de Asturias
+		regionesProvincias.put(regiones[17], res.getStringArray(R.array.PrincipadoAsturias));
+		//Regioń de Murcia
+		regionesProvincias.put(regiones[18], res.getStringArray(R.array.RegionMurcia));
 		
 		
 		//provincias-municipios
@@ -98,7 +100,7 @@ public class GeographySpain {
 		//Cantabria
 		provinciasMunicipios.put(provincias[11], res.getStringArray(R.array.MunicipiosCantabria));
 		//Castellón
-		provinciasMunicipios.put(provincias[12], res.getStringArray(R.array.MunicipiosCastellón));
+		provinciasMunicipios.put(provincias[12], res.getStringArray(R.array.MunicipiosCastellon));
 		//Ceuta
 		provinciasMunicipios.put(provincias[13], res.getStringArray(R.array.MunicipiosCeuta));
 		//Ciudad Real
@@ -177,16 +179,14 @@ public class GeographySpain {
 		provinciasMunicipios.put(provincias[50], res.getStringArray(R.array.MunicipiosZamora));
 		//Zaragoza
 		provinciasMunicipios.put(provincias[51], res.getStringArray(R.array.MunicipiosZaragoza));
-		
-		
-		
-		
+
 	}
 	
-	public  String[] getProvinciass(String region){
-		return regionesProvincias.get(region);
+	public String[] getProvincias(String region){
+		String[] provincias = regionesProvincias.get(region);
+		return provincias;
 	}
-	public  String[] getRegiones(){
+	public  String[] getRegiones(){ 
 		return regiones;
 	}
 
