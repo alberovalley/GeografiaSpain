@@ -5,11 +5,14 @@ import java.util.HashMap;
 import com.alberovalley.geografiaspain.R;
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 
 public class GeographySpain {
 	
 	private static HashMap <String, String[]> regionesProvincias;
 	private static HashMap <String, String[]> provinciasMunicipios;
+	private static HashMap <String, String> municipiosProvincia;
+	private static HashMap <String, String> provinciasRegion;
 	private static String[] regiones;
 	
 	private static GeographySpain instance = null;
@@ -180,6 +183,42 @@ public class GeographySpain {
 		//Zaragoza
 		provinciasMunicipios.put(provincias[51], res.getStringArray(R.array.MunicipiosZaragoza));
 
+		
+		
+		// búsqueda inversa
+		Log.d("GeographySpain", "GeographySpain instanciando" );
+		municipiosProvincia = new HashMap<String, String>();
+		provinciasRegion = new HashMap<String, String>();
+		String[] regiones = res.getStringArray(R.array.regiones);
+		Log.d("GeographySpain", "GeographySpain regiones nº " + regiones.length );
+		for (int i = 0; i < regiones.length; i ++){
+			Log.d("GeographySpain", "GeographySpain region nº " + i );
+			String region = regiones[i];
+			Log.d("GeographySpain", "GeographySpain region nº " + i + " => " + region);
+			String[] provincias2 = getProvincias(region);
+			Log.d("GeographySpain", "GeographySpain provincias de " + region + " total " + provincias2.length);
+			int j = 0;
+			while(j < provincias2.length){
+				Log.d("GeographySpain", "GeographySpain provincia nº " + j );
+				String provincia = provincias2[j];
+				Log.d("GeographySpain", "GeographySpain provincia nº " + j + " => " + provincia);
+				provinciasRegion.put(provincia, region);
+				
+				String[] municipios = getMunicipios(provincia);
+				Log.d("GeographySpain", "GeographySpain municipios de " + provincia + " total " + municipios.length);
+				int k = 0;
+				while(k < municipios.length){
+					Log.d("GeographySpain", "GeographySpain municipio nº " +k);
+					String municipio = municipios[k];
+					Log.d("GeographySpain", "GeographySpain municipio nº " + k + " => " + municipio);
+					municipiosProvincia.put(municipio, provincia);
+					 k++;
+				}
+				j++;
+			}
+		
+			Log.d("GeographySpain", "GeographySpain siguiente region " + (regiones.length - i));
+		}
 	}
 	
 	public String[] getProvincias(String region){
@@ -192,5 +231,14 @@ public class GeographySpain {
 
 	public  String[] getMunicipios(String provincia){
 		return provinciasMunicipios.get(provincia);
+	}
+	
+	public String getRegionDeProvincia(String provincia){
+		String region = provinciasRegion.get(provincia);
+		return region;
+	}
+	public String getProvinciaDeMunicipio(String municipio){
+		String provincia= municipiosProvincia.get(municipio);
+		return provincia;
 	}
 }
