@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="button_text_size_normal">20sp</dimen>   
+	<dimen name="button_margin_h">2dip</dimen>
+    <dimen name="button_margin_v">20dip</dimen>
+    <dimen name="button_padding_h">10dip</dimen>
+    <dimen name="layout_contenedor_padding">8dip</dimen>
+    <dimen name="layout_contenedor_margin">12dip</dimen>
+    <dimen name="layout_contenedor_margin_h">16dip</dimen>
+    <dimen name="layout_contenedor_margin_v">64dip</dimen>
+    <dimen name="text_size_menor">12sp</dimen>
+    
+    <dimen name="text_size_titulo">25sp</dimen>
+    
+    <dimen name="text_size_bloque">15sp</dimen>
+    <dimen name="text_size_normal">20sp</dimen>
+    <dimen name="edit_text_size">20sp</dimen>
+    <dimen name="layout_contenedor_list_item_padding">4dip</dimen>
+</resources>

@@ -1,65 +1,40 @@
 package com.alberovalley.geografiaspain;
 
-import com.alberovalley.utils.data.GeographySpain;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
+import java.util.Map;
+
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
 
-public class ActividadPrincipal extends Activity implements OnItemSelectedListener {
-	private Spinner regionesSpinner;
-	private Spinner provinciasSpinner;
-	private Spinner municipiosSpinner;
+import com.alberovalley.utils.data.GeographySpain;
+
+public class ActividadPrincipal extends FragmentActivity 
+	implements OnClickListener, GeographyListener {
+
+	private TextView tvRegion;
+	private TextView tvProvincia;
+	private TextView tvMunicipio;
 	
-	private ArrayAdapter<String> regionesAdapter;
-	private ArrayAdapter<String> provinciasAdapter;
-	private ArrayAdapter<String> municipiosAdapter;
-
-	private GeographySpain geografiaEspana;
-	private String[] regiones;
-	@SuppressLint("NewApi")
+	private Button btProbar;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.actividad_principal);
 		
-		geografiaEspana = GeographySpain.getInstance(this);
+		btProbar = (Button) findViewById(R.id.btProbar);
+		btProbar.setOnClickListener(this);
 		
-		regionesSpinner   = (Spinner)findViewById(R.id.spregiones);
-		provinciasSpinner = (Spinner)findViewById(R.id.spprovincias);
-		municipiosSpinner = (Spinner)findViewById(R.id.spmunicipios);
+		tvRegion    = (TextView)findViewById(R.id.tvRegion);
+		tvProvincia = (TextView)findViewById(R.id.tvProvincia);
+		tvMunicipio = (TextView)findViewById(R.id.tvMunicipio);
 		
-		regiones = geografiaEspana.getRegiones();
-		
-		regionesAdapter = putStringArrayIntoAdapter(geografiaEspana.getRegiones());
-		
-		provinciasAdapter = new ArrayAdapter<String>(
-				this, 
-				android.R.layout.simple_spinner_item
-				);
-		municipiosAdapter = new ArrayAdapter<String>(
-				this, 
-				android.R.layout.simple_spinner_item
-				);
-		regionesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		provinciasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		municipiosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		
-		regionesSpinner.setAdapter(regionesAdapter);
-		provinciasSpinner.setAdapter(provinciasAdapter);
-		municipiosSpinner.setAdapter(municipiosAdapter);
-		
-		regionesSpinner.setOnItemSelectedListener(this);
-		provinciasSpinner.setOnItemSelectedListener(this);
-		municipiosSpinner.setOnItemSelectedListener(this);
 	}
 
 	@Override
@@ -69,51 +44,25 @@ public class ActividadPrincipal extends Activity implements OnItemSelectedListen
 		return true;
 	}
 
-	@SuppressLint("NewApi")
 	@Override
-	public void onItemSelected(AdapterView<?> parent, View v, int position,
-			long id) {
-		
-		int viewId = parent.getId();
-		Log.d("GeographySpain", "onItemSelected " + viewId);
-		if(viewId == R.id.spregiones){
-			String region = regionesAdapter.getItem(position);
-			Log.d("GeographySpain", "elegida region " + region);
-			provinciasAdapter = putStringArrayIntoAdapter( 
-					geografiaEspana.getProvincias(region)
-					);
-			provinciasSpinner.setAdapter(provinciasAdapter);
-			provinciasAdapter.notifyDataSetChanged();
-		}else if (viewId == R.id.spprovincias){
-			String provincia = provinciasAdapter.getItem(position);
-			Log.d("GeographySpain", "elegida provincia " + provincia);
-			municipiosAdapter = putStringArrayIntoAdapter(geografiaEspana.getMunicipios(provincia ));
-			municipiosSpinner.setAdapter(municipiosAdapter);
-			municipiosAdapter.notifyDataSetChanged();
-		}else if (viewId == R.id.spmunicipios){
-			String municipio = municipiosAdapter.getItem(position) ;
-			Log.d("GeographySpain", "elegida provincia " + municipio);
-			Toast.makeText(this, "Municipio elegido: ["+municipio+ "]", Toast.LENGTH_SHORT).show();
-		}else{
-			Log.w("GeographySpain", "evento no controlado");
+	public void onClick(View v) {
+		if(v.getId()==R.id.btProbar){
+			GeographySelector gs = new GeographySelector(this);
+			gs.setOnGeograpySelectedListener(this);
+			FragmentManager fm = getSupportFragmentManager();
+			gs.show(fm, "geographySelector");
 		}
 		
 	}
 
 	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
+	public void onGeographySelected(Map<String, String> hm) {
+		tvRegion.setText(hm.get(GeographySpain.REGION));
+		tvProvincia.setText(hm.get(GeographySpain.PROVINCIA));
+		tvMunicipio.setText(hm.get(GeographySpain.MUNICIPIO));
+		
 		
 	}
-	
-	private ArrayAdapter<String> putStringArrayIntoAdapter(String[] array){
-		ArrayAdapter<String>adapter = new ArrayAdapter<String>(
-				this, 
-				android.R.layout.simple_spinner_item, 
-				array
-				);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		return adapter;
-	}
-		
+
+			
 }

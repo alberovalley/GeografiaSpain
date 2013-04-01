@@ -1,10 +1,10 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme" parent="android:Theme.Light">
+    <style name="AppBaseTheme" >
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -14,7 +14,48 @@
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        
     </style>
+
+    <style name="Contenedor" parent="AppTheme">
+        <item name="android:padding">@dimen/layout_contenedor_padding</item>
+    </style>
+
+    <style name="Contenedor.Detalle" parent="Contenedor">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/layout_contenedor_padding</item>
+    </style>
+
+    
+    <style name="botones" parent="AppTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_titulo</item>
+        <item name="android:layout_marginLeft">@dimen/button_margin_h</item>
+        <item name="android:layout_marginTop">@dimen/button_margin_v</item>
+        <item name="android:paddingLeft">@dimen/button_padding_h</item>
+        <item name="android:paddingRight">@dimen/button_padding_h</item>
+    </style>
+    <style name="botones.top" parent="botones">
+        <item name="android:layout_marginBottom">@dimen/button_margin_v</item>
+    </style>
+    <style name="botones.Medium" parent="botones">
+        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:layout_margin">@dimen/button_margin_h</item>
+        <item name="android:layout_marginTop">@dimen/button_margin_v</item>
+    </style>
+
+    <style name="botones.Small" parent="botones">
+        <item name="android:textSize">@dimen/text_size_menor</item>
+        <item name="android:layout_margin">@dimen/button_margin_h</item>
+        <item name="android:layout_marginTop">@dimen/button_margin_v</item>
+    </style>
+
+    <style name="spinner" >
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
+    </style>
+
 
 </resources>

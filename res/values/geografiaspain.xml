@@ -8382,4 +8382,11 @@
         <item>Zapardiel de la Cañada</item>
         <item>Zapardiel de la Ribera</item>
     </string-array>
+    
+    <string name="geografia_region_label">Región</string>
+    <string name="geografia_provincia_label">Provincia</string>
+    <string name="geografia_ciudad_label">Ciudad</string>
+    <string name="geografia_provincia_sin_region_label">Elija una región primero</string>
+    <string name="geografia_ciudad_sin_provincia_label">Elija una provincia primero</string>
+    
 </resources>

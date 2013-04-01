@@ -6,6 +6,7 @@ import com.alberovalley.geografiaspain.R;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 public class GeographySpain {
 	
@@ -15,12 +16,29 @@ public class GeographySpain {
 	private static HashMap <String, String> provinciasRegion;
 	private static String[] regiones;
 	
+	public static String regionLabel;
+	public static String provinciaLabel;
+	public static String provinciaSinRegionLabel;
+	public static String municipioLabel;
+	public static String municipioSinProvinciaLabel;
+	
+	public static final String MUNICIPIO = "MUNICIPIO";
+	public static final String PROVINCIA = "PROVINCIA";
+	public static final String REGION    = "REGION";
+	
 	private static GeographySpain instance = null;
 	
 	public static GeographySpain getInstance(Context context){
 		if(instance== null){
 			instance = new GeographySpain(context);
 		}
+		
+		regionLabel                = context.getString(R.string.geografia_region_label);
+		provinciaLabel             = context.getString(R.string.geografia_provincia_label);
+		municipioLabel             = context.getString(R.string.geografia_ciudad_label);
+		provinciaSinRegionLabel    = context.getString(R.string.geografia_provincia_sin_region_label);
+		municipioSinProvinciaLabel = context.getString(R.string.geografia_ciudad_sin_provincia_label);
+		
 		return instance;
 	}
 	
@@ -221,16 +239,50 @@ public class GeographySpain {
 		}
 	}
 	
-	public String[] getProvincias(String region){
+	private String[] getProvincias(String region){
 		String[] provincias = regionesProvincias.get(region);
 		return provincias;
 	}
-	public  String[] getRegiones(){ 
+	public String[] getProvincias(String region, String label){
+		String[] buffer = regionesProvincias.get(region);
+		if (buffer ==null){
+			buffer = (new String[] {""});
+		}
+		String[] provincias = new String[buffer.length + 1];
+		provincias[0] = label;
+		for (int i = 0; i < buffer.length; i++){
+			provincias[i+1] = buffer[i];
+		}
+		return provincias;
+	}
+	private  String[] getRegiones(){ 
 		return regiones;
 	}
+	public  String[] getRegiones(String label){
+		String[] buffer = regiones;
+		String[] regionesArray = new String[buffer.length +1];
+		regionesArray[0] = label;
+		for (int i = 0; i < buffer.length; i++){
+			regionesArray[i+1] = buffer[i];
+		}
+		return regionesArray;
+	}
 
-	public  String[] getMunicipios(String provincia){
+	private  String[] getMunicipios(String provincia){
 		return provinciasMunicipios.get(provincia);
+	}
+	
+	public  String[] getMunicipios(String provincia, String label){
+		String[] buffer = provinciasMunicipios.get(provincia);
+		if(buffer ==null){
+			buffer = (new String[]{""});
+		}
+		String[] municipios = new String[buffer.length + 1];
+		municipios[0] = label;
+		for (int i = 0; i < buffer.length; i++){
+			municipios[i+1] = buffer[i];
+		}
+		return municipios;
 	}
 	
 	public String getRegionDeProvincia(String provincia){
@@ -241,4 +293,15 @@ public class GeographySpain {
 		String provincia= municipiosProvincia.get(municipio);
 		return provincia;
 	}
+	
+	public ArrayAdapter<String> putStringArrayIntoAdapter(String[] array, Context context){
+		ArrayAdapter<String>adapter = new ArrayAdapter<String>(
+				context, 
+				android.R.layout.simple_spinner_item, 
+				array
+				);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		return adapter;
+	}
+	
 }
